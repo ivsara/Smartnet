@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartNet Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header class="topbar">
+    <div>
+        <h1>SmartNet Monitor</h1>
+        <p>Network and Application Service Monitoring System</p>
+    </div>
+    <span id="statusBadge" class="badge">Checking backend...</span>
+</header>
+
+<main class="container">
+    <section class="stats-grid">
+        <div class="stat"><span>Total Tests</span><strong id="totalTests">0</strong></div>
+        <div class="stat"><span>Successful</span><strong id="successfulTests">0</strong></div>
+        <div class="stat"><span>Failed</span><strong id="failedTests">0</strong></div>
+        <div class="stat"><span>Availability</span><strong id="availability">0%</strong></div>
+        <div class="stat"><span>Avg. Response</span><strong id="averageResponse">0 ms</strong></div>
+    </section>
+
+    <section class="card">
+        <div class="card-title"><h2>Automatic TCP Monitoring</h2><span id="monitorStatus" class="muted">Stopped</span></div>
+        <div class="form-grid">
+            <input id="autoHost" placeholder="Host, e.g. example.com">
+            <input id="autoPort" type="number" placeholder="Port, e.g. 443">
+            <input id="autoInterval" type="number" value="30" min="10" placeholder="Seconds">
+            <button onclick="startMonitoring()">Start</button>
+            <button class="secondary" onclick="stopMonitoring()">Stop</button>
+        </div>
+    </section>
+
+    <section class="monitor-grid">
+        <div class="card monitor-card"><h2>DNS</h2><input id="dnsHost" placeholder="Hostname"><button onclick="checkDNS()">Check DNS</button><div id="dnsResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>TCP</h2><input id="tcpHost" placeholder="Host"><input id="tcpPort" type="number" placeholder="Port"><button onclick="checkTCP()">Check TCP</button><div id="tcpResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>UDP</h2><input id="udpHost" placeholder="Host"><input id="udpPort" type="number" placeholder="Port"><button onclick="checkUDP()">Check UDP</button><div id="udpResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>QoS</h2><input id="qosHost" placeholder="Host"><input id="qosPort" type="number" placeholder="Port"><input id="qosCount" type="number" value="5" min="1" max="50"><button onclick="checkQoS()">Measure QoS</button><div id="qosResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>HTTP</h2><input id="httpUrl" placeholder="https://example.com"><button onclick="checkHTTP()">Check HTTP</button><div id="httpResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>SMTP / Email</h2><input id="smtpHost" placeholder="SMTP server"><input id="smtpPort" type="number" value="587"><button onclick="checkSMTP()">Check SMTP</button><div id="smtpResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>FTP</h2><input id="ftpHost" placeholder="FTP server"><input id="ftpPort" type="number" value="21"><button onclick="checkFTP()">Check FTP</button><div id="ftpResult" class="result"></div></div>
+        <div class="card monitor-card"><h2>SNMP</h2><input id="snmpHost" placeholder="SNMP device"><input id="snmpPort" type="number" value="161"><input id="snmpCommunity" value="public" placeholder="Community"><button onclick="checkSNMP()">Check SNMP</button><div id="snmpResult" class="result"></div></div>
+    </section>
+
+    <section class="card">
+        <div class="card-title"><h2>Response Time History</h2><button class="secondary small" onclick="loadDashboard()">Refresh</button></div>
+        <canvas id="responseChart"></canvas>
+    </section>
+
+    <section class="card">
+        <div class="card-title"><h2>Monitoring History</h2><button class="secondary small" onclick="loadHistory()">Refresh</button></div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Time</th><th>Protocol</th><th>Target</th><th>Port</th><th>Status</th><th>Response (ms)</th><th>Details</th></tr></thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
