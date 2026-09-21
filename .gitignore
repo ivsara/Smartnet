@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Flask / local environment
+.env
+.env.*
+!.env.example
+instance/
+
+# SQLite database and local runtime data
+*.db
+*.sqlite
+*.sqlite3
+
+# IDEs/editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test/cache/coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Build/package artifacts
+build/
+dist/
+*.egg-info/
+
+# OS/editor temporary files
+*.tmp
+*.temp
+~$*
+
+# Local screenshots/results that may contain private infrastructure details
+# Keep the screenshots directory itself in Git via .gitkeep.
+screenshots/*
+!screenshots/.gitkeep
